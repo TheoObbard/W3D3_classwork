@@ -9,4 +9,12 @@
 #
 
 class User < ApplicationRecord
+  has_many :enrolled_in,
+    primary_key: :id,
+    foreign_key: :student_id,
+    class_name: :Enrollment
+
+  has_many :enrolled_courses,
+    through: :enrolled_in,
+    source: :Course
 end
