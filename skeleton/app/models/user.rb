@@ -9,14 +9,16 @@
 #
 
 class User < ApplicationRecord
-  
-  has_many :enrolled_in,
+
+  # has_many(:enrollments, {primary_key: :id, :foreign_key => :student_id, class_name: "Enrollment"})
+
+  has_many :enrollements,
     primary_key: :id,
     foreign_key: :student_id,
-    class_name: :Enrollment
+    class_name: "Enrollment"
 
   has_many :enrolled_courses,
-    through: :enrolled_in,
+    through: :enrollements,
     source: :subject
 
 end
