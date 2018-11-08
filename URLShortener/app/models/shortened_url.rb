@@ -12,9 +12,14 @@ class ShortenedUrl < ApplicationRecord
 
   validates :short_url, :long_url, :user_id, presence: true, uniqueness: true
 
+  belongs_to :submitter,
+    primary_key: :id,
+    foreign_key: :user_id,
+    class_name: 'User'
+
   def self.make_url(user, long_url)
     short_url = ShortenedUrl.random_code
-    ShortenedUrl.new({:short_url => short_url, :long_url => long_url, :user_id => user.id})
+    ShortenedUrl.create({:short_url => short_url, :long_url => long_url, :user_id => user.id})
   end
 
   def self.random_code
@@ -24,12 +29,6 @@ class ShortenedUrl < ApplicationRecord
     else
       return rand_code
     end
-  end
-
-  def initialize(options)
-    @short_url = options[:short_url]
-    @long_url = options[:long_url]
-    @user_id = options[:user_id]
   end
 
 end
